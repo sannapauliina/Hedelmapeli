@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hedelmäpeli</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>🎰 Hedelmäpeli</h1>
+
+  <div id="money">Rahat: €<span id="balance">10</span></div>
+
+  <label for="bet">Panos (€):</label>
+  <select id="bet">
+    <option value="1">€1</option>
+    <option value="2">€2</option>
+    <option value="3">€3</option>
+    <option value="4">€4</option>
+    <option value="5">€5</option>
+</select>
+
+
+  <!-- Pelialue: rullat ja lukitus -->
+  <div id="reels">
+    <div class="reel">
+      <img id="reel0" src="" alt="Rulla 1" />
+      <button class="lock" data-index="0">🔒</button>
+    </div>
+    <div class="reel">
+      <img id="reel1" src="" alt="Rulla 2" />
+      <button class="lock" data-index="1">🔒</button>
+    </div>
+    <div class="reel">
+      <img id="reel2" src="" alt="Rulla 3" />
+      <button class="lock" data-index="2">🔒</button>
+    </div>
+    <div class="reel">
+      <img id="reel3" src="" alt="Rulla 4" />
+      <button class="lock" data-index="3">🔒</button>
+    </div>
+  </div>
+
+  <button id="play">Pelaa</button>
+
+  <!-- Tulos -->
+  <div id="result"></div>
+
+  <!-- Info -->
+  <div id="info-panels">
+    <div id="payout-panel">
+      <h2>Voittotaulukko</h2>
+      <ul id="payouts">
+        <li>4 × 7 → 10 × panos</li>
+        <li>4 × omena → 6 × panos</li>
+        <li>4 × meloni → 5 × panos</li>
+        <li>4 × päärynä → 4 × panos</li>
+        <li>4 × kirsikka → 3 × panos</li>
+        <li>3 × 7 → 5 × panos</li>
+      </ul>
+    </div>
+
+    <div id="history-panel">
+      <h2>Voittohistoria</h2>
+      <ul id="history"></ul>
+    </div>
+  </div>
+
+  <br>
+  <br>
+
+  <script src="main.js"></script>
+</body>
+</html>

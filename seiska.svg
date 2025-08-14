@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Numero 7">
+  <title>Numero 7</title>
+  <rect width="128" height="128" fill="none"/>
+  <!-- Punainen täyttö -->
+  <path d="M20 20 H108 L68 108 H40 L78 36 H20 Z" fill="#d32f2f"/>
+  <!-- Kevyt varjostus -->
+  <path d="M20 20 H108 L68 108 H60 L96 36 H20 Z" fill="#b71c1c" opacity="0.25"/>
+</svg>
+
+

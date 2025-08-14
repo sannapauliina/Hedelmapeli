@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Päärynä">
+  <title>Päärynä</title>
+  <rect width="128" height="128" fill="none"/>
+  <!-- Runko -->
+  <path d="M64 36c-10 0-14 8-16 14-2 6-6 10-9 16-2 4-3 8-3 12 0 20 17 36 40 36s40-16 40-36c0-4-1-8-3-12-3-6-7-10-9-16-2-6-6-14-16-14-6 0-10 2-14 2s-8-2-14-2z"
+        fill="#66bb6a"/>
+  <!-- Kanta -->
+  <rect x="63" y="22" width="4" height="16" rx="2" fill="#6d4c41" transform="rotate(-10 65 30)"/>
+  <!-- Lehti -->
+  <path d="M72 24c12-6 22 3 22 3s-8 14-20 10-12-11-2-13z" fill="#43a047"/>
+  <!-- Kiilto -->
+  <ellipse cx="52" cy="68" rx="9" ry="6" fill="#ffffff" opacity="0.25"/>
+</svg>
+
+

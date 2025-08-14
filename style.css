@@ -1,0 +1,174 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom right, #f1e686, #e3b063);
+  background-attachment: fixed;
+  color: #010000;
+  text-align: center;
+  padding: 2rem;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+#money {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+#bet {
+  width: 60px;
+  font-size: 1rem;
+  margin: 0.5rem;
+}
+
+#reels {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.reel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 0.5rem;
+  width: 100px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.reel img {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 0.5rem;
+}
+
+.lock {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background-color 0.3s;
+}
+
+.lock:hover {
+  background-color: #d32f2f;
+}
+
+#play {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#play:hover {
+  background-color: #388e3c;
+}
+
+#result {
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.reel.spin img {
+  animation: spin 0.6s ease-in-out;
+}
+
+@keyframes spin {
+  0% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+  50% { transform: scale(1.2) rotate(20deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+#payouts {
+  list-style: none;
+  padding: 0;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+#payouts li {
+  background: #fff;
+  border: 1px solid #ccc;
+  margin: 0.3rem auto;
+  padding: 0.5rem 1rem;
+  width: fit-content;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#history {
+  list-style: none;
+  padding: 0;
+  font-size: 0.95rem;
+  margin-top: 1rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#history li {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  margin: 0.3rem auto;
+  padding: 0.4rem 1rem;
+  width: fit-content;
+  border-radius: 6px;
+  font-family: monospace;
+}
+
+#info-panels {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+#payout-panel, #history-panel {
+  background: #fff;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 250px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+#payout-panel h2, #history-panel h2 {
+  margin-top: 0;
+}
+
+#payouts li, #history li {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  margin: 0.3rem auto;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  font-family: monospace;
+}
+
+
+
