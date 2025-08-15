@@ -15,7 +15,8 @@ const imageNames = {
 };
 
 let secondRound = false;
-
+let roundBet = null;   // Kierroksen panos jäädytetty
+let canLock = false;   // Saako juuri nyt lukita rullia
 
 let balance = 10;
 let locked = [false, false, false, false];
@@ -34,13 +35,10 @@ function addToHistory(win, combination) {
   const li = document.createElement("li");
   li.textContent = `+€${win} → ${combination.join(" - ")}`;
   historyEl.prepend(li);
-
-  // Säilytetään 10 viimeisintä
   if (historyEl.children.length > 10) {
     historyEl.removeChild(historyEl.lastChild);
   }
 }
-
 
 function updateBalance() {
   balanceEl.textContent = balance.toFixed(2);
@@ -75,39 +73,91 @@ function checkWin(bet) {
   return win;
 }
 
-playBtn.addEventListener("click", () => {
-  const bet = parseInt(betInput.value);
+function refreshLockIcons() {
+  lockBtns.forEach(btn => {
+    const i = parseInt(btn.dataset.index);
+    btn.textContent = locked[i] ? "🔒" : "🔓"; // lukittu = 🔒, auki = 🔓
+  });
+}
 
+function setLocking(enabled) {
+  canLock = enabled;
+  lockBtns.forEach(btn => {
+    btn.disabled = !enabled;
+  });
+}
+
+function resetLocks() {
+  locked = [false, false, false, false];
+  refreshLockIcons();
+}
+
+
+playBtn.addEventListener("click", () => {
   if (!secondRound) {
-    // Ensimmäinen kierros
-    if (bet > balance) {
+    // Ensimmäinen kierros - jäädytetään panos
+    roundBet = parseInt(betInput.value);
+
+    if (roundBet > balance) {
       resultEl.textContent = "Ei tarpeeksi rahaa!";
       return;
     }
 
-    balance -= bet;
+    // Estetään panoksen muuttaminen kierroksen aikana
+    betInput.disabled = true;
+
+    // Veloitetaan panos ensimmäisestä pyöräytyksestä
+    balance -= roundBet;
+    updateBalance();
+
+    // Ei saa lukita ennen ensimmäistä tulosta
+    setLocking(false);
+
     spinReels();
-    const win = checkWin(bet);
+    const win = checkWin(roundBet);
 
     if (win > 0) {
       balance += win;
       resultEl.textContent = `Voitto! Saat €${win}`;
       addToHistory(win, reels.map(r => imageNames[r]));
-      locked = [false, false, false, false];
-      lockBtns.forEach(btn => btn.textContent = "🔒");
+
+      // Kierros päättyy heti voittoon
+      resetLocks();          // Kaikki auki
+      setLocking(false);     // Ei lukitusta
       secondRound = false;
+      betInput.disabled = false;
+      roundBet = null;
     } else {
       resultEl.textContent = "Ei voittoa. Voit lukita rullia ja yrittää uudelleen.";
       secondRound = true;
+      setLocking(true);      // Nyt lukitus sallittu
     }
 
-    updateBalance();
     checkGameOver();
 
   } else {
-    // Toinen kierros
+    // Toinen kierros – käytetään täsmälleen samaa roundBet-arvoa
+    if (roundBet == null) {
+      // Varotoimi, jos jostain syystä roundBet puuttuu
+      roundBet = parseInt(betInput.value);
+    }
+
+    if (roundBet > balance) {
+      resultEl.textContent = "Ei tarpeeksi rahaa toiseen pyöräytykseen.";
+      // Kierros keskeytyy siististi
+      resetLocks();
+      setLocking(false);
+      secondRound = false;
+      betInput.disabled = false;
+      roundBet = null;
+      checkGameOver();
+      return;
+    }
+    balance -= roundBet;
+    updateBalance();
+
     spinReels();
-    const win = checkWin(bet);
+    const win = checkWin(roundBet);
 
     if (win > 0) {
       balance += win;
@@ -117,25 +167,27 @@ playBtn.addEventListener("click", () => {
       resultEl.textContent = "Ei voittoa toisellakaan kierroksella.";
     }
 
-    locked = [false, false, false, false];
-    lockBtns.forEach(btn => btn.textContent = "🔒");
+    resetLocks();          // Lukitukset pois
+    setLocking(false);     // Ei voi lukita ennen uutta kierrosta
     secondRound = false;
-    updateBalance();
+    betInput.disabled = false;
+    roundBet = null;
+
     checkGameOver();
   }
 });
 
-
+// Lukitusnapit toimivat vain kun lukitus on sallittu
 lockBtns.forEach(btn => {
   btn.addEventListener("click", () => {
+    if (!canLock) return;  // ignore, jos ei saa lukita juuri nyt 
     const index = parseInt(btn.dataset.index);
     locked[index] = !locked[index];
-    btn.textContent = locked[index] ? "🔓" : "🔒";
+    refreshLockIcons();
   });
 });
 
 updateBalance();
-
 
 function initReels() {
   for (let i = 0; i < 4; i++) {
@@ -145,7 +197,9 @@ function initReels() {
   }
 }
 
-initReels(); // kutsutaan heti kun skripti latautuu
+initReels();
+resetLocks();      // Alussa kaikki auki
+setLocking(false); // Alussa lukitus ei käytössä
 
 function checkGameOver() {
   if (balance < 1) {
@@ -155,6 +209,11 @@ function checkGameOver() {
       updateBalance();
       resultEl.textContent = "Uusi peli käynnistetty. Onnea matkaan!";
       initReels();
+      resetLocks();
+      setLocking(false);
+      secondRound = false;
+      betInput.disabled = false;
+      roundBet = null;
     }, 2000);
   }
 }
