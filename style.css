@@ -170,5 +170,11 @@ h1 {
   font-family: monospace;
 }
 
+.lock:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
 
 
